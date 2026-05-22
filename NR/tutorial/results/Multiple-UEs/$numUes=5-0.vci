@@ -1,0 +1,1825 @@
+file 15954383 1779469346                                        
+version 3
+run Multiple-UEs-1-20260522-19:02:09-9556
+attr configname Multiple-UEs
+attr datetime 20260522-19:02:09
+attr datetimef 20260522-190209
+attr experiment Multiple-UEs
+attr inifile omnetpp.ini
+attr iterationvars $numUes=5
+attr iterationvarsd numUes=5
+attr iterationvarsf numUes=5-
+attr measurement $numUes=5
+attr network simu5g.simulations.NR.networks.SingleCell_Standalone
+attr processid 9556
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 1
+attr seedset 0
+itervar numUes 5
+config image-path ../../../images;../../../../inet4.5/images
+config extends BgTraffic
+config *.numUe 5
+config *.ue[*].mobility.initialX uniform(0m,1000m)
+config *.ue[*].mobility.initialY uniform(0m,1000m)
+config *.server.numApps 5
+config output-scalar-file results/Multiple-UEs/$numUes=5-0.sca
+config output-vector-file results/Multiple-UEs/$numUes=5-0.vec
+config extends Single-UE
+config *.numBgCells 1
+config *.bgCell[*].bgScheduler.isNr true
+config *.bgCell[*].bgScheduler.txPower 23
+config *.bgCell[*].mobility.initialX 750m
+config *.bgCell[*].mobility.initialY 1000m
+config *.bgCell[*].bgTrafficGenerator.numBgUes 10
+config *.bgCell[*].bgTrafficGenerator.bgUE[*].mobility.initialX uniform(500m,1000m)
+config *.bgCell[*].bgTrafficGenerator.bgUE[*].mobility.initialY uniform(500m,1000m)
+config *.bgCell[*].bgTrafficGenerator.bgUE[*].trafficGeneratorType "\"TrafficGeneratorCbr\""
+config *.bgCell[*].bgTrafficGenerator.bgUE[*].generator.startTimeDl uniform(0s,0.05s)
+config *.bgCell[*].bgTrafficGenerator.bgUE[*].generator.packetSizeDl 1000B
+config *.bgCell[*].bgTrafficGenerator.bgUE[*].generator.periodDl 0.01s
+config *.gnb.mobility.initialX 500m
+config *.gnb.mobility.initialY 500m
+config *.numUe 1
+config *.ue[*].mobility.initialX 500m
+config *.ue[*].mobility.initialY 900m
+config *.ue[*].macCellId 0
+config *.ue[*].masterId 0
+config *.ue[*].nrMacCellId 1
+config *.ue[*].nrMasterId 1
+config *.ue[*].numApps 1
+config *.server.numApps 1
+config *.ue[*].app[*].typename CbrReceiver
+config *.ue[*].app[*].localPort 1000
+config *.server.app[*].typename CbrSender
+config *.server.app[*].PacketSize 1000
+config *.server.app[*].sampling_time 0.01s
+config *.server.app[*].destAddress "\"ue[\"+string(ancestorIndex(0))+\"]\""
+config *.server.app[*].destPort 1000
+config *.server.app[*].localPort 3088+ancestorIndex(0)
+config *.server.app[*].startTime uniform(0.01s,0.05s)
+config output-scalar-file-append false
+config network simu5g.simulations.NR.networks.SingleCell_Standalone
+config sim-time-limit 10s
+config warmup-period 1s
+config seed-set 0
+config output-scalar-file results/Multiple-UEs/0.sca
+config output-vector-file results/Multiple-UEs/0.vec
+config **.routingRecorder.enabled false
+config **.amcType "\"NRAmc\""
+config **.targetBler 0.01
+config **.blerShift 5
+config *.configurator.config "xmldoc(\"./demo.xml\")"
+config **.mobility.constraintAreaMaxX 1000m
+config **.mobility.constraintAreaMaxY 1000m
+config **.mobility.constraintAreaMinX 0m
+config **.mobility.constraintAreaMinY 0m
+config **.mobility.constraintAreaMinZ 0m
+config **.mobility.constraintAreaMaxZ 0m
+config **.mobility.initFromDisplayString false
+
+vector 0 SingleCell_Standalone.server.ppp[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 1 SingleCell_Standalone.server.ppp[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 2 SingleCell_Standalone.server.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 3 SingleCell_Standalone.server.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 4 SingleCell_Standalone.server.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 5 SingleCell_Standalone.router.ppp[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 6 SingleCell_Standalone.router.ppp[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 7 SingleCell_Standalone.router.ppp[1].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 8 SingleCell_Standalone.router.ppp[1].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 9 SingleCell_Standalone.upf.ppp[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 10 SingleCell_Standalone.upf.ppp[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 11 SingleCell_Standalone.upf.pppIf.queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 12 SingleCell_Standalone.upf.pppIf.queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 13 SingleCell_Standalone.upf.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 14 SingleCell_Standalone.upf.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 15 SingleCell_Standalone.upf.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 16 SingleCell_Standalone.iUpf.ppp[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 17 SingleCell_Standalone.iUpf.ppp[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 18 SingleCell_Standalone.iUpf.ppp[1].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 19 SingleCell_Standalone.iUpf.ppp[1].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 20 SingleCell_Standalone.iUpf.pppIf.queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 21 SingleCell_Standalone.iUpf.pppIf.queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 22 SingleCell_Standalone.iUpf.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 23 SingleCell_Standalone.iUpf.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 24 SingleCell_Standalone.iUpf.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 25 SingleCell_Standalone.gnb.pppIf.queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 26 SingleCell_Standalone.gnb.pppIf.queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 27 SingleCell_Standalone.gnb.pppMEHostIf.queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 28 SingleCell_Standalone.gnb.pppMEHostIf.queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 29 SingleCell_Standalone.gnb.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 30 SingleCell_Standalone.gnb.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 31 SingleCell_Standalone.gnb.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 32 SingleCell_Standalone.ue[0].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 33 SingleCell_Standalone.ue[0].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 34 SingleCell_Standalone.ue[0].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 35 SingleCell_Standalone.ue[1].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 36 SingleCell_Standalone.ue[1].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 37 SingleCell_Standalone.ue[1].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 38 SingleCell_Standalone.ue[2].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 39 SingleCell_Standalone.ue[2].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 40 SingleCell_Standalone.ue[2].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 41 SingleCell_Standalone.ue[3].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 42 SingleCell_Standalone.ue[3].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 43 SingleCell_Standalone.ue[3].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 44 SingleCell_Standalone.ue[4].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 45 SingleCell_Standalone.ue[4].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 46 SingleCell_Standalone.ue[4].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 47 SingleCell_Standalone.bgCell[0].bgScheduler bgAvgServedBlocksUl:vector ETV
+attr recordingmode vector
+attr source bgAvgServedBlocksUl
+attr title "Average UL served blocks for background cells"
+attr unit ""
+vector 48 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[1].generator bgAverageCqiDl:vector ETV
+attr recordingmode vector
+attr source bgAverageCqiDl
+attr title "Average DL CQI for background UEs"
+attr unit ""
+vector 49 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[1].generator bgHarqErrorRateDl:vector ETV
+attr recordingmode vector
+attr source bgHarqErrorRateDl
+attr title "Average DL HARQ error rate for background UEs"
+attr unit ""
+vector 50 SingleCell_Standalone.bgCell[0].bgScheduler bgAvgServedBlocksDl:vector ETV
+attr recordingmode vector
+attr source bgAvgServedBlocksDl
+attr title "Average DL served blocks for background cells"
+attr unit ""
+vector 51 SingleCell_Standalone.gnb.cellularNic.mac avgServedBlocksUl:vector ETV
+attr recordingmode vector
+attr source avgServedBlocksUl
+attr title "Avg Served Blocks Ul"
+attr unit blocks
+vector 52 SingleCell_Standalone.gnb.cellularNic.mac avgServedBlocksDl:vector ETV
+attr recordingmode vector
+attr source avgServedBlocksDl
+attr title "Avg Served Blocks Dl"
+attr unit blocks
+vector 53 SingleCell_Standalone.gnb.cellularNic.mac sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 54 SingleCell_Standalone.gnb.cellularNic.rlc.um rlcPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 55 SingleCell_Standalone.gnb.cellularNic.rlc.um sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 56 SingleCell_Standalone.gnb.cellularNic.mac receivedPacketFromUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromUpperLayer
+vector 57 SingleCell_Standalone.ue[1].cellularNic.nrMac sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 58 SingleCell_Standalone.gnb.cellularNic.mac macDelayDl:vector ETV
+attr recordingmode vector
+attr source macDelayDl
+attr title "Delay at the MAC layer UL"
+attr unit s
+vector 59 SingleCell_Standalone.ue[1].cellularNic.nrMac sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 60 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 61 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um rlcPduThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcPduThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 62 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um rlcPduDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcPduDelayDl
+attr title "Delay at the rlc layer UL"
+attr unit s
+vector 63 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um rlcThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 64 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um rlcPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 65 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um rlcPacketLossTotal:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossTotal
+attr title "rlc Packet Loss"
+attr unit ""
+vector 66 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um rlcDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcDelayDl
+attr title "Delay at the rlc layer DL"
+attr unit s
+vector 67 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 68 SingleCell_Standalone.ue[1].cellularNic.nrRlc.um rlcPduPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPduPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 69 SingleCell_Standalone.ue[1].cellularNic.pdcpRrc receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 70 SingleCell_Standalone.ue[1].cellularNic.pdcpRrc sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 71 SingleCell_Standalone.ue[1].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 72 SingleCell_Standalone.ue[1].app[0] cbrFrameDelay:vector ETV
+attr recordingmode vector
+attr source cbrFrameDelaySignal
+attr title "Cbr Frame Delay"
+attr unit s
+vector 73 SingleCell_Standalone.ue[1].app[0] cbrRcvdPkt:vector ETV
+attr recordingmode vector
+attr source cbrRcvdPkt
+attr title "Received packet ID"
+attr unit ""
+vector 74 SingleCell_Standalone.ue[2].cellularNic.nrMac sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 75 SingleCell_Standalone.ue[2].cellularNic.nrMac sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 76 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 77 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um rlcPduThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcPduThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 78 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um rlcPduDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcPduDelayDl
+attr title "Delay at the rlc layer UL"
+attr unit s
+vector 79 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um rlcPduPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPduPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 80 SingleCell_Standalone.gnb.cellularNic.mac sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 81 SingleCell_Standalone.gnb.cellularNic.mac receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 82 SingleCell_Standalone.ue[0].cellularNic.nrMac harqErrorRate_1st_Dl:vector ETV
+attr recordingmode vector
+attr source harqErrorRate_1st_Dl
+attr title "Harq Error Rate Dl (1st tx)"
+attr unit ""
+vector 83 SingleCell_Standalone.ue[0].cellularNic.nrMac harqErrorRateDl:vector ETV
+attr recordingmode vector
+attr source harqErrorRateDl
+attr title "Harq Error Rate Dl"
+attr unit ""
+vector 84 SingleCell_Standalone.ue[0].cellularNic.nrMac harqTxAttemptsDl:vector ETV
+attr recordingmode vector
+attr source harqTxAttemptsDl
+attr title "Harq Tx Attempts Dl"
+attr unit ""
+vector 85 SingleCell_Standalone.ue[1].cellularNic.nrMac harqErrorRate_1st_Dl:vector ETV
+attr recordingmode vector
+attr source harqErrorRate_1st_Dl
+attr title "Harq Error Rate Dl (1st tx)"
+attr unit ""
+vector 86 SingleCell_Standalone.ue[1].cellularNic.nrMac harqErrorRateDl:vector ETV
+attr recordingmode vector
+attr source harqErrorRateDl
+attr title "Harq Error Rate Dl"
+attr unit ""
+vector 87 SingleCell_Standalone.ue[1].cellularNic.nrMac harqTxAttemptsDl:vector ETV
+attr recordingmode vector
+attr source harqTxAttemptsDl
+attr title "Harq Tx Attempts Dl"
+attr unit ""
+vector 88 SingleCell_Standalone.ue[3].cellularNic.nrPhy averageCqiDl:vector ETV
+attr recordingmode vector
+attr source averageCqiDl
+attr title "Average Cqi reported in DL"
+attr unit cqi
+vector 89 SingleCell_Standalone.ue[3].cellularNic.nrChannelModel[0] distance:vector ETV
+attr recordingmode vector
+attr source distance
+attr title "distance between UE and serving base station"
+attr unit meters
+vector 90 SingleCell_Standalone.ue[3].cellularNic.nrChannelModel[0] rcvdSinrDl:vector ETV
+attr recordingmode vector
+attr source rcvdSinrDl
+attr title "SINR measured at packet reception, DL"
+attr unit dB
+vector 91 SingleCell_Standalone.ue[3].cellularNic.nrMac receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 92 SingleCell_Standalone.server.udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 93 SingleCell_Standalone.server.ppp[0].queue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 94 SingleCell_Standalone.server.ppp[0].queue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 95 SingleCell_Standalone.server.ppp[0].queue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 96 SingleCell_Standalone.server.ppp[0].ppp rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 97 SingleCell_Standalone.server.ppp[0].ppp transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "tx state"
+vector 98 SingleCell_Standalone.server.ppp[0].ppp txPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToLower
+attr title "packets transmitted, packetBytes"
+vector 99 SingleCell_Standalone.router.ppp[0].ppp rxPkOk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source rxPkOk
+attr title "packets received OK, packetBytes"
+vector 100 SingleCell_Standalone.router.ppp[0].ppp passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 101 SingleCell_Standalone.router.ppp[1].queue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 102 SingleCell_Standalone.router.ppp[1].queue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 103 SingleCell_Standalone.router.ppp[1].queue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 104 SingleCell_Standalone.router.ppp[1].ppp rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 105 SingleCell_Standalone.router.ppp[1].ppp transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "tx state"
+vector 106 SingleCell_Standalone.router.ppp[1].ppp txPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToLower
+attr title "packets transmitted, packetBytes"
+vector 107 SingleCell_Standalone.upf.pppIf.ppp rxPkOk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source rxPkOk
+attr title "packets received OK, packetBytes"
+vector 108 SingleCell_Standalone.upf.pppIf.ppp passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 109 SingleCell_Standalone.upf.udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 110 SingleCell_Standalone.upf.ppp[0].queue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 111 SingleCell_Standalone.upf.ppp[0].queue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 112 SingleCell_Standalone.upf.ppp[0].queue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 113 SingleCell_Standalone.upf.ppp[0].ppp rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 114 SingleCell_Standalone.upf.ppp[0].ppp transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "tx state"
+vector 115 SingleCell_Standalone.upf.ppp[0].ppp txPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToLower
+attr title "packets transmitted, packetBytes"
+vector 116 SingleCell_Standalone.iUpf.ppp[0].ppp rxPkOk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source rxPkOk
+attr title "packets received OK, packetBytes"
+vector 117 SingleCell_Standalone.iUpf.ppp[0].ppp passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 118 SingleCell_Standalone.iUpf.ppp[1].queue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 119 SingleCell_Standalone.iUpf.ppp[1].queue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 120 SingleCell_Standalone.iUpf.ppp[1].queue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 121 SingleCell_Standalone.iUpf.ppp[1].ppp rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 122 SingleCell_Standalone.iUpf.ppp[1].ppp transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "tx state"
+vector 123 SingleCell_Standalone.iUpf.ppp[1].ppp txPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToLower
+attr title "packets transmitted, packetBytes"
+vector 124 SingleCell_Standalone.gnb.pppIf.ppp rxPkOk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source rxPkOk
+attr title "packets received OK, packetBytes"
+vector 125 SingleCell_Standalone.gnb.pppIf.ppp passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 126 SingleCell_Standalone.gnb.udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 127 SingleCell_Standalone.gnb.cellularNic.pdcpRrc receivedPacketFromUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromUpperLayer
+vector 128 SingleCell_Standalone.gnb.cellularNic.pdcpRrc sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 129 SingleCell_Standalone.gnb.cellularNic.rlc.um receivedPacketFromUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromUpperLayer
+vector 130 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um rlcThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 131 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um rlcPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 132 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um rlcPacketLossTotal:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossTotal
+attr title "rlc Packet Loss"
+attr unit ""
+vector 133 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um rlcDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcDelayDl
+attr title "Delay at the rlc layer DL"
+attr unit s
+vector 134 SingleCell_Standalone.ue[2].cellularNic.nrRlc.um sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 135 SingleCell_Standalone.ue[2].cellularNic.pdcpRrc receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 136 SingleCell_Standalone.ue[2].cellularNic.pdcpRrc sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 137 SingleCell_Standalone.ue[2].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 138 SingleCell_Standalone.ue[2].app[0] cbrReceivedBytes:vector ETV
+attr recordingmode vector
+attr source cbrReceivedBytesSignal
+attr title "Bytes received at the application level"
+attr unit Bps
+vector 139 SingleCell_Standalone.ue[2].app[0] cbrFrameDelay:vector ETV
+attr recordingmode vector
+attr source cbrFrameDelaySignal
+attr title "Cbr Frame Delay"
+attr unit s
+vector 140 SingleCell_Standalone.ue[2].app[0] cbrRcvdPkt:vector ETV
+attr recordingmode vector
+attr source cbrRcvdPkt
+attr title "Received packet ID"
+attr unit ""
+vector 141 SingleCell_Standalone.ue[3].cellularNic.nrMac sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 142 SingleCell_Standalone.ue[3].cellularNic.nrMac sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 143 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 144 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um rlcPduThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcPduThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 145 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um rlcPduDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcPduDelayDl
+attr title "Delay at the rlc layer UL"
+attr unit s
+vector 146 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um rlcPduPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPduPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 147 SingleCell_Standalone.ue[2].cellularNic.nrMac harqErrorRate_1st_Dl:vector ETV
+attr recordingmode vector
+attr source harqErrorRate_1st_Dl
+attr title "Harq Error Rate Dl (1st tx)"
+attr unit ""
+vector 148 SingleCell_Standalone.ue[2].cellularNic.nrMac harqErrorRateDl:vector ETV
+attr recordingmode vector
+attr source harqErrorRateDl
+attr title "Harq Error Rate Dl"
+attr unit ""
+vector 149 SingleCell_Standalone.ue[2].cellularNic.nrMac harqTxAttemptsDl:vector ETV
+attr recordingmode vector
+attr source harqTxAttemptsDl
+attr title "Harq Tx Attempts Dl"
+attr unit ""
+vector 150 SingleCell_Standalone.ue[2].cellularNic.nrPhy averageCqiDl:vector ETV
+attr recordingmode vector
+attr source averageCqiDl
+attr title "Average Cqi reported in DL"
+attr unit cqi
+vector 151 SingleCell_Standalone.ue[2].cellularNic.nrChannelModel[0] distance:vector ETV
+attr recordingmode vector
+attr source distance
+attr title "distance between UE and serving base station"
+attr unit meters
+vector 152 SingleCell_Standalone.ue[2].cellularNic.nrChannelModel[0] rcvdSinrDl:vector ETV
+attr recordingmode vector
+attr source rcvdSinrDl
+attr title "SINR measured at packet reception, DL"
+attr unit dB
+vector 153 SingleCell_Standalone.ue[2].cellularNic.nrMac receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 154 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[0].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 155 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[1].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 156 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[2].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 157 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[3].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 158 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[4].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 159 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[5].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 160 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[6].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 161 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[7].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 162 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[8].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 163 SingleCell_Standalone.bgCell[0].bgTrafficGenerator.bgUE[9].generator bgMeasuredSinrDl:vector ETV
+attr recordingmode vector
+attr source bgMeasuredSinrDl
+attr title "Average DL SINR for background UEs"
+attr unit ""
+vector 164 SingleCell_Standalone.ue[3].cellularNic.nrMac harqErrorRate_1st_Dl:vector ETV
+attr recordingmode vector
+attr source harqErrorRate_1st_Dl
+attr title "Harq Error Rate Dl (1st tx)"
+attr unit ""
+vector 165 SingleCell_Standalone.ue[3].cellularNic.nrMac harqErrorRateDl:vector ETV
+attr recordingmode vector
+attr source harqErrorRateDl
+attr title "Harq Error Rate Dl"
+attr unit ""
+vector 166 SingleCell_Standalone.ue[3].cellularNic.nrMac harqTxAttemptsDl:vector ETV
+attr recordingmode vector
+attr source harqTxAttemptsDl
+attr title "Harq Tx Attempts Dl"
+attr unit ""
+vector 167 SingleCell_Standalone.ue[4].cellularNic.nrPhy averageCqiDl:vector ETV
+attr recordingmode vector
+attr source averageCqiDl
+attr title "Average Cqi reported in DL"
+attr unit cqi
+vector 168 SingleCell_Standalone.ue[4].cellularNic.nrChannelModel[0] distance:vector ETV
+attr recordingmode vector
+attr source distance
+attr title "distance between UE and serving base station"
+attr unit meters
+vector 169 SingleCell_Standalone.ue[4].cellularNic.nrChannelModel[0] rcvdSinrDl:vector ETV
+attr recordingmode vector
+attr source rcvdSinrDl
+attr title "SINR measured at packet reception, DL"
+attr unit dB
+vector 170 SingleCell_Standalone.ue[4].cellularNic.nrMac receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 171 SingleCell_Standalone.ue[0].cellularNic.nrChannelModel[0] measuredSinrUl:vector ETV
+attr recordingmode vector
+attr source measuredSinrUl
+attr title "SINR measured at feedback computation, UL"
+attr unit dB
+vector 172 SingleCell_Standalone.ue[0].cellularNic.nrChannelModel[0] measuredSinrDl:vector ETV
+attr recordingmode vector
+attr source measuredSinrDl
+attr title "SINR measured at feedback computation, DL"
+attr unit dB
+vector 173 SingleCell_Standalone.ue[1].cellularNic.nrChannelModel[0] measuredSinrUl:vector ETV
+attr recordingmode vector
+attr source measuredSinrUl
+attr title "SINR measured at feedback computation, UL"
+attr unit dB
+vector 174 SingleCell_Standalone.ue[1].cellularNic.nrChannelModel[0] measuredSinrDl:vector ETV
+attr recordingmode vector
+attr source measuredSinrDl
+attr title "SINR measured at feedback computation, DL"
+attr unit dB
+vector 175 SingleCell_Standalone.ue[2].cellularNic.nrChannelModel[0] measuredSinrUl:vector ETV
+attr recordingmode vector
+attr source measuredSinrUl
+attr title "SINR measured at feedback computation, UL"
+attr unit dB
+vector 176 SingleCell_Standalone.ue[2].cellularNic.nrChannelModel[0] measuredSinrDl:vector ETV
+attr recordingmode vector
+attr source measuredSinrDl
+attr title "SINR measured at feedback computation, DL"
+attr unit dB
+vector 177 SingleCell_Standalone.ue[3].cellularNic.nrChannelModel[0] measuredSinrUl:vector ETV
+attr recordingmode vector
+attr source measuredSinrUl
+attr title "SINR measured at feedback computation, UL"
+attr unit dB
+vector 178 SingleCell_Standalone.ue[3].cellularNic.nrChannelModel[0] measuredSinrDl:vector ETV
+attr recordingmode vector
+attr source measuredSinrDl
+attr title "SINR measured at feedback computation, DL"
+attr unit dB
+vector 179 SingleCell_Standalone.ue[4].cellularNic.nrChannelModel[0] measuredSinrUl:vector ETV
+attr recordingmode vector
+attr source measuredSinrUl
+attr title "SINR measured at feedback computation, UL"
+attr unit dB
+vector 180 SingleCell_Standalone.ue[4].cellularNic.nrChannelModel[0] measuredSinrDl:vector ETV
+attr recordingmode vector
+attr source measuredSinrDl
+attr title "SINR measured at feedback computation, DL"
+attr unit dB
+vector 181 SingleCell_Standalone.ue[0].cellularNic.nrPhy averageCqiDl:vector ETV
+attr recordingmode vector
+attr source averageCqiDl
+attr title "Average Cqi reported in DL"
+attr unit cqi
+vector 182 SingleCell_Standalone.ue[0].cellularNic.nrChannelModel[0] distance:vector ETV
+attr recordingmode vector
+attr source distance
+attr title "distance between UE and serving base station"
+attr unit meters
+vector 183 SingleCell_Standalone.ue[0].cellularNic.nrChannelModel[0] rcvdSinrDl:vector ETV
+attr recordingmode vector
+attr source rcvdSinrDl
+attr title "SINR measured at packet reception, DL"
+attr unit dB
+vector 184 SingleCell_Standalone.ue[0].cellularNic.nrMac receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 185 SingleCell_Standalone.ue[4].cellularNic.nrMac sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 186 SingleCell_Standalone.ue[4].cellularNic.nrMac sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 187 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 188 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um rlcPduThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcPduThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 189 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um rlcPduDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcPduDelayDl
+attr title "Delay at the rlc layer UL"
+attr unit s
+vector 190 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um rlcPduPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPduPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 191 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um rlcThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 192 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um rlcPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 193 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um rlcPacketLossTotal:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossTotal
+attr title "rlc Packet Loss"
+attr unit ""
+vector 194 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um rlcDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcDelayDl
+attr title "Delay at the rlc layer DL"
+attr unit s
+vector 195 SingleCell_Standalone.ue[4].cellularNic.nrRlc.um sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 196 SingleCell_Standalone.ue[4].cellularNic.pdcpRrc receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 197 SingleCell_Standalone.ue[4].cellularNic.pdcpRrc sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 198 SingleCell_Standalone.ue[4].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 199 SingleCell_Standalone.ue[4].app[0] cbrReceivedBytes:vector ETV
+attr recordingmode vector
+attr source cbrReceivedBytesSignal
+attr title "Bytes received at the application level"
+attr unit Bps
+vector 200 SingleCell_Standalone.ue[4].app[0] cbrFrameDelay:vector ETV
+attr recordingmode vector
+attr source cbrFrameDelaySignal
+attr title "Cbr Frame Delay"
+attr unit s
+vector 201 SingleCell_Standalone.ue[4].app[0] cbrRcvdPkt:vector ETV
+attr recordingmode vector
+attr source cbrRcvdPkt
+attr title "Received packet ID"
+attr unit ""
+vector 202 SingleCell_Standalone.ue[4].cellularNic.nrMac harqErrorRate_1st_Dl:vector ETV
+attr recordingmode vector
+attr source harqErrorRate_1st_Dl
+attr title "Harq Error Rate Dl (1st tx)"
+attr unit ""
+vector 203 SingleCell_Standalone.ue[4].cellularNic.nrMac harqErrorRateDl:vector ETV
+attr recordingmode vector
+attr source harqErrorRateDl
+attr title "Harq Error Rate Dl"
+attr unit ""
+vector 204 SingleCell_Standalone.ue[4].cellularNic.nrMac harqTxAttemptsDl:vector ETV
+attr recordingmode vector
+attr source harqTxAttemptsDl
+attr title "Harq Tx Attempts Dl"
+attr unit ""
+vector 205 SingleCell_Standalone.ue[1].cellularNic.nrPhy averageCqiDl:vector ETV
+attr recordingmode vector
+attr source averageCqiDl
+attr title "Average Cqi reported in DL"
+attr unit cqi
+vector 206 SingleCell_Standalone.ue[1].cellularNic.nrChannelModel[0] distance:vector ETV
+attr recordingmode vector
+attr source distance
+attr title "distance between UE and serving base station"
+attr unit meters
+vector 207 SingleCell_Standalone.ue[1].cellularNic.nrChannelModel[0] rcvdSinrDl:vector ETV
+attr recordingmode vector
+attr source rcvdSinrDl
+attr title "SINR measured at packet reception, DL"
+attr unit dB
+vector 208 SingleCell_Standalone.ue[1].cellularNic.nrMac receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 209 SingleCell_Standalone.ue[0].cellularNic.nrMac sentPacketToLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToLowerLayer
+vector 210 SingleCell_Standalone.ue[0].cellularNic.nrMac sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 211 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 212 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um rlcPduThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcPduThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 213 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um rlcPduDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcPduDelayDl
+attr title "Delay at the rlc layer UL"
+attr unit s
+vector 214 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um rlcPduPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPduPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 215 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um rlcThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 216 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um rlcPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 217 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um rlcPacketLossTotal:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossTotal
+attr title "rlc Packet Loss"
+attr unit ""
+vector 218 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um rlcDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcDelayDl
+attr title "Delay at the rlc layer DL"
+attr unit s
+vector 219 SingleCell_Standalone.ue[0].cellularNic.nrRlc.um sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 220 SingleCell_Standalone.ue[0].cellularNic.pdcpRrc receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 221 SingleCell_Standalone.ue[0].cellularNic.pdcpRrc sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 222 SingleCell_Standalone.ue[0].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 223 SingleCell_Standalone.ue[0].app[0] cbrReceivedBytes:vector ETV
+attr recordingmode vector
+attr source cbrReceivedBytesSignal
+attr title "Bytes received at the application level"
+attr unit Bps
+vector 224 SingleCell_Standalone.ue[0].app[0] cbrFrameDelay:vector ETV
+attr recordingmode vector
+attr source cbrFrameDelaySignal
+attr title "Cbr Frame Delay"
+attr unit s
+vector 225 SingleCell_Standalone.ue[0].app[0] cbrRcvdPkt:vector ETV
+attr recordingmode vector
+attr source cbrRcvdPkt
+attr title "Received packet ID"
+attr unit ""
+vector 226 SingleCell_Standalone.ue[1].app[0] cbrReceivedBytes:vector ETV
+attr recordingmode vector
+attr source cbrReceivedBytesSignal
+attr title "Bytes received at the application level"
+attr unit Bps
+vector 227 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um rlcThroughputDl:vector ETV
+attr recordingmode vector
+attr source rlcThroughputDl
+attr title "Throughput at the rlc layer DL"
+attr unit Bps
+vector 228 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um rlcPacketLossDl:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossDl
+attr title "rlc Packet Loss"
+attr unit ""
+vector 229 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um rlcPacketLossTotal:vector ETV
+attr recordingmode vector
+attr source rlcPacketLossTotal
+attr title "rlc Packet Loss"
+attr unit ""
+vector 230 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um rlcDelayDl:vector ETV
+attr recordingmode vector
+attr source rlcDelayDl
+attr title "Delay at the rlc layer DL"
+attr unit s
+vector 231 SingleCell_Standalone.ue[3].cellularNic.nrRlc.um sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 232 SingleCell_Standalone.ue[3].cellularNic.pdcpRrc receivedPacketFromLowerLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source receivedPacketFromLowerLayer
+vector 233 SingleCell_Standalone.ue[3].cellularNic.pdcpRrc sentPacketToUpperLayer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source sentPacketToUpperLayer
+vector 234 SingleCell_Standalone.ue[3].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 235 SingleCell_Standalone.ue[3].app[0] cbrReceivedBytes:vector ETV
+attr recordingmode vector
+attr source cbrReceivedBytesSignal
+attr title "Bytes received at the application level"
+attr unit Bps
+vector 236 SingleCell_Standalone.ue[3].app[0] cbrFrameDelay:vector ETV
+attr recordingmode vector
+attr source cbrFrameDelaySignal
+attr title "Cbr Frame Delay"
+attr unit s
+vector 237 SingleCell_Standalone.ue[3].app[0] cbrRcvdPkt:vector ETV
+attr recordingmode vector
+attr source cbrRcvdPkt
+attr title "Received packet ID"
+attr unit ""
+vector 238 SingleCell_Standalone.server.ppp[0].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 239 SingleCell_Standalone.server.ppp[0].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 240 SingleCell_Standalone.router.ppp[1].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 241 SingleCell_Standalone.router.ppp[1].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 242 SingleCell_Standalone.upf.ppp[0].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 243 SingleCell_Standalone.upf.ppp[0].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 244 SingleCell_Standalone.iUpf.ppp[1].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 245 SingleCell_Standalone.iUpf.ppp[1].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 246 SingleCell_Standalone.ue[3].cellularNic.nrMac harqErrorRate_2nd_Dl:vector ETV
+attr recordingmode vector
+attr source harqErrorRate_2nd_Dl
+attr title "Harq Error Rate Dl (2nd tx)"
+attr unit ""
+0	59530 98140 0 446484 1 8.464276156826 3738 0 0 0 0
+1	157670 98140 0 446484 1 8.464276156826 3738 0 0 0 0
+2	255810 9 0 0 1 1 1 0 0 0 0
+3	255819 9 0 0 1 1 1 0 0 0 0
+4	255828 9 0 0 1 1 1 0 0 0 0
+5	255837 45 0 0 1 1 5 0 0 0 0
+6	255882 45 0 0 1 1 5 0 0 0 0
+7	255927 98140 0 446488 1 8.464277034826 3738 0 0 0 0
+8	354067 98140 0 446488 1 8.464277034826 3738 0 0 0 0
+9	452207 98114 0 446397 1 8.46246249497 3737 0 0 0 0
+10	550321 101851 0 446397 1 8.46246249497 3737 0 0 0 0
+11	652172 50 0 0 1 1 5 0 0 0 0
+12	652222 50 0 0 1 1 5 0 0 0 0
+13	652272 10 0 0 1 1 1 0 0 0 0
+14	652282 10 0 0 1 1 1 0 0 0 0
+15	652292 10 0 0 1 1 1 0 0 0 0
+16	652302 50 0 0 1 1 5 0 0 0 0
+17	652352 50 0 0 1 1 5 0 0 0 0
+18	652402 101851 0 446401 1 8.46246340177 3737 0 0 0 0
+19	754253 101851 0 446401 1 8.46246340177 3737 0 0 0 0
+20	856104 50 0 0 1 1 5 0 0 0 0
+21	856154 50 0 0 1 1 5 0 0 0 0
+22	856204 10 0 0 1 1 1 0 0 0 0
+23	856214 10 0 0 1 1 1 0 0 0 0
+24	856224 10 0 0 1 1 1 0 0 0 0
+25	856234 50 0 0 1 1 5 0 0 0 0
+26	856284 50 0 0 1 1 5 0 0 0 0
+27	856334 50 0 0 1 1 5 0 0 0 0
+28	856384 50 0 0 1 1 5 0 0 0 0
+29	856434 111900 0 446405 1 8.46246430857 3733 0 3732 6965778 17333177590
+30	968334 10 0 0 1 1 1 0 0 0 0
+31	968344 10 0 0 1 1 1 0 0 0 0
+32	968354 15465 0 446144 1 8.458 747 0 746 278631 138665361
+33	983819 10 0 0 1 1 1 0 0 0 0
+34	983829 10 0 0 1 1 1 0 0 0 0
+35	983839 14671 0 446263 1 8.46 748 0 747 279378 139223370
+36	998510 10 0 0 1 1 1 0 0 0 0
+37	998520 10 0 0 1 1 1 0 0 0 0
+38	998530 15490 0 446156 1 8.458 748 0 747 279378 139223370
+39	1014020 10 0 0 1 1 1 0 0 0 0
+40	1014030 10 0 0 1 1 1 0 0 0 0
+41	1014040 15249 0 446432 1 8.463 746 0 745 277885 138108845
+42	1029289 10 0 0 1 1 1 0 0 0 0
+43	1029299 10 0 0 1 1 1 0 0 0 0
+44	1029309 15477 0 446052 1 8.456 747 0 746 278631 138665361
+45	1044786 10 0 0 1 1 1 0 0 0 0
+46	1044796 10 0 0 1 1 1 0 0 0 0
+47	1044806 140084 51716 446446 1 8.464 7465 0 0 0 0
+48	1184890 140084 51716 446446 1 8.464 7465 3 3 22395 67185
+49	1324974 140084 51716 446446 1 8.464 7465 0 1 730 730
+50	1465058 140084 51716 446446 1 8.464 7465 6 6 44790 268740
+51	1605142 140084 51717 446447 1 8.464 7465 0 0 0 0
+52	1745226 140084 51717 446447 1 8.464 7465 4 6 41785 237179
+53	1885310 196018 51717 446447 1 8.464 10428 1 1 10428 10428
+54	2081328 196018 51719 446453 1 8.464 10428 0 0 0 0
+55	2277346 216137 51719 446453 1 8.464 10428 44 868 3860367 2097049035
+56	2493483 329134 51721 446459 1 8.464 14160 44 1031 7708059 6064019487
+57	2822617 27346 51725 446256 1 8.46 1493 1 1 1493 1493
+58	2849963 236837 51725 446465 1 8.464 10427 0.004 0.01 41.893999999999 0.16943599999998
+59	3086800 30332 51725 446256 1 8.46 1493 165 868 771073 580894399
+60	3117132 30332 51728 446259 1 8.46 1493 165 868 771073 580894399
+61	3147464 27348 51728 446259 1 8.46 1493 0 0 nan nan
+62	3174812 33318 51728 446259 1 8.46 1493 0.004 0.004 5.9719999999998 0.023888
+63	3208130 23022 51728 446259 1 8.46 747 116417.69436997 inf inf inf
+64	3231152 13275 51728 446259 1 8.46 747 0 0 0 0
+65	3244427 13275 51728 446259 1 8.46 747 0 0 0 0
+66	3257702 22986 51728 446259 1 8.46 747 0.005720273574 0.006720273574 4.280044359778 0.024530066561804
+67	3280688 15516 51728 446259 1 8.46 747 1029 1029 768663 790954227
+68	3296204 27346 51728 446259 1 8.46 1493 0 0 0 0
+69	3323550 15516 51729 446260 1 8.46 747 1029 1029 768663 790954227
+70	3339066 15516 51729 446260 1 8.46 747 1028 1028 767916 789417648
+71	3354582 15516 51732 446263 1 8.46 747 1008 1008 752976 758999808
+72	3370098 22986 51733 446264 1 8.46 747 0.005723843174 0.006723843174 4.282710850978 0.024560632172804
+73	3393084 14766 51733 446264 1 8.46 747 97 843 351090 199748298
+74	3407850 42591 51735 446465 1 8.464 2258 1 1 2258 2258
+75	3450441 47107 51735 446465 1 8.464 2258 121 490 772937 290676455
+76	3497548 47107 51738 446468 1 8.464 2258 121 490 772937 290676455
+77	3544655 42593 51738 446468 1 8.464 2258 0 0 nan nan
+78	3587248 51623 51738 446468 1 8.464 2258 0.004 0.004 9.0319999999994 0.036128
+79	3638871 42591 51738 446468 1 8.464 2258 0 0 0 0
+80	3681462 216785 51743 446473 1 8.464 10459 46 870 3889135 2114597431
+81	3898247 312607 51746 446478 1 8.464 16679 1 1 16679 16679
+82	4210854 28169 51746 446195 1 8.459 1493 0 0 0 0
+83	4239023 28169 51746 446195 1 8.459 1493 0 0 0 0
+84	4267192 28169 51746 446195 1 8.459 1493 1 1 1493 1493
+85	4295361 27376 51748 446337 1 8.461 1494 0 0 0 0
+86	4322737 27376 51748 446337 1 8.461 1494 0 0 0 0
+87	4350113 27376 51748 446337 1 8.461 1494 1 1 1494 1494
+88	4377489 69274 51749 446278 1 8.46 3714 6 6 22284 133704
+89	4446763 121270 51749 446278 1 8.46 3714 423.00940623693 423.00940623693 1571056.934764 664571861.13888
+90	4568033 121270 51749 446278 1 8.46 3714 3.7549390042967 5.0412478490001 15507.050086426 65020.081207016
+91	4689303 75973 51750 446279 1 8.46 3714 46 276 788762 197357204
+92	4765276 113027 51753 446482 1.000926239686 8.464276156826 3733 1008 1008 3762864 3792966912
+93	4878303 113027 51755 446484 1.000926239686 8.464276156826 3733 8224 8224 30700192 252478379008
+94	4991330 101828 51755 446484 1.000926239686 8.464276156826 3733 0 0 0 0
+95	5093158 113027 51755 446484 1.000926239686 8.464276156826 3733 8224 8224 30700192 252478379008
+96	5206185 113027 51755 446484 1.000926239686 8.464276156826 3733 1028 1028 3837524 3944974672
+97	5319212 203656 51755 446485 1.000926239686 8.464276984826 7466 0 1 3733 3733
+98	5522868 113027 51755 446484 1.000926239686 8.464276156826 3733 1035 1035 3863655 3998882925
+99	5635895 113027 51757 446486 1.000927117686 8.464277034826 3733 1035 1035 3863655 3998882925
+100	5748922 116760 51757 446486 1.000927117686 8.464277034826 3733 1028 1028 3837524 3944974672
+101	5865682 116760 51759 446488 1.000927117686 8.464277034826 3733 8224 8224 30700192 252478379008
+102	5982442 105561 51759 446488 1.000927117686 8.464277034826 3733 0 0 0 0
+103	6088003 116760 51759 446488 1.000927117686 8.464277034826 3733 8224 8224 30700192 252478379008
+104	6204763 116760 51759 446488 1.000927117686 8.464277034826 3733 1028 1028 3837524 3944974672
+105	6321523 211122 51759 446489 1.000927117686 8.464277862826 7466 0 1 3733 3733
+106	6532645 116760 51759 446488 1.000927117686 8.464277034826 3733 1035 1035 3863655 3998882925
+107	6649405 116760 51761 446490 1.000927995686 8.464277912826 3733 1035 1035 3863655 3998882925
+108	6766165 116760 51761 446490 1.000927995686 8.464277912826 3733 1028 1028 3837524 3944974672
+109	6882925 116761 51764 446493 1.000927995686 8.464277912826 3733 1044 1044 3897252 4068731088
+110	6999686 116761 51766 446495 1.000927995686 8.464277912826 3733 8512 8512 31775296 270471319552
+111	7116447 105562 51766 446495 1.000927995686 8.464277912826 3733 0 0 0 0
+112	7222009 116761 51766 446495 1.000927995686 8.464277912826 3733 8512 8512 31775296 270471319552
+113	7338770 116761 51766 446495 1.000927995686 8.464277912826 3733 1064 1064 3971912 4226114368
+114	7455531 211066 51766 446398 1.000927995686 8.46246335177 7464 0 1 3732 3732
+115	7666597 116729 51766 446397 1.000927995686 8.46246249497 3732 1071 1071 3996972 4280757012
+116	7783326 116729 51768 446399 1.000928902486 8.46246340177 3732 1071 1071 3996972 4280757012
+117	7900055 116729 51768 446399 1.000928902486 8.46246340177 3732 1064 1064 3970848 4224982272
+118	8016784 116729 51770 446401 1.000928902486 8.46246340177 3732 8512 8512 31766784 270398865408
+119	8133513 105533 51770 446401 1.000928902486 8.46246340177 3732 0 0 0 0
+120	8239046 116729 51770 446401 1.000928902486 8.46246340177 3732 8512 8512 31766784 270398865408
+121	8355775 116729 51770 446401 1.000928902486 8.46246340177 3732 1064 1064 3970848 4224982272
+122	8472504 211066 51770 446402 1.000928902486 8.46246425857 7464 0 1 3732 3732
+123	8683570 116729 51770 446401 1.000928902486 8.46246340177 3732 1071 1071 3996972 4280757012
+124	8800299 116729 51772 446403 1.000929809286 8.46246430857 3732 1071 1071 3996972 4280757012
+125	8917028 116729 51772 446403 1.000929809286 8.46246430857 3732 1064 1064 3970848 4224982272
+126	9033757 116729 51774 446405 1.000929809286 8.46246430857 3732 1044 1044 3896208 4067641152
+127	9150486 116729 51777 446408 1.000929809286 8.46246430857 3732 1028 1028 3836496 3943917888
+128	9267215 116729 51777 446408 1.000929809286 8.46246430857 3732 1029 1029 3840228 3951594612
+129	9383944 116729 51778 446409 1.000929809286 8.46246430857 3732 1029 1029 3840228 3951594612
+130	9500673 25029 51796 446152 1.001 8.458 747 116310.94127112 99813000 252375228.24227 1.0216022493063e+16
+131	9525702 14841 51796 446152 1.001 8.458 747 0 0 0 0
+132	9540543 14841 51796 446152 1.001 8.458 747 0 0 0 0
+133	9555384 23058 51796 446152 1.001 8.458 747 0.0089530711 0.0119530711 6.7559441116999 0.061285256814476
+134	9578442 17082 51796 446152 1.001 8.458 747 1029 1029 768663 790954227
+135	9595524 17082 51797 446153 1.001 8.458 747 1029 1029 768663 790954227
+136	9612606 17082 51797 446153 1.001 8.458 747 1028 1028 767916 789417648
+137	9629688 17082 51800 446156 1.001 8.458 747 1008 1008 752976 758999808
+138	9646770 17082 51801 446157 1.001 8.458 747 1000 1000 747000 747000000
+139	9663852 23058 51801 446157 1.001 8.458 747 0.0089566407 0.0119566407 6.7586106029001 0.061333498368985
+140	9686910 16331 51801 446157 1.001 8.458 747 96 842 350343 199046865
+141	9703241 73066 51803 446425 1.001 8.463 3716 1 1 3716 3716
+142	9776307 79097 51803 446425 1.001 8.463 3685 44 274 773940 192291520
+143	9855404 79097 51806 446428 1.001 8.463 3685 44 274 773940 192291520
+144	9934501 72456 51806 446428 1.001 8.463 3685 0 0 0 0
+145	10006957 87165 51806 446428 1.001 8.463 3685 0.004 0.01 14.925999999999 0.061564000000003
+146	10094122 72456 51806 446428 1.001 8.463 3685 0 0 0 0
+147	10166578 44863 51814 446197 1.001 8.459 2257 0 0 0 0
+148	10211441 44863 51814 446197 1.001 8.459 2257 0 0 0 0
+149	10256304 44863 51814 446197 1.001 8.459 2257 1 1 2257 2257
+150	10301167 47121 51815 446440 1.001 8.463 2257 13 13 29341 381433
+151	10348288 76462 51815 446440 1.001 8.463 2257 596.31907950106 596.31907950106 1345892.1624339 802581175.41025
+152	10424750 75715 51815 446440 1.001 8.463 2257 24.594292296859 26.816949035369 56698.501457276 1425022.9133496
+153	10500465 49378 51816 446441 1.001 8.463 2257 123 492 777392 293788766
+154	10549843 43110 51818 446232 1.002 8.46 1244 -15.332708316919 -11.500005362153 -18119.546110511 266846.76531911
+155	10592953 43110 51819 446233 1.002 8.46 1244 -18.797289170637 -11.824060446537 -21647.493775972 386383.68271914
+156	10636063 43110 51820 446234 1.002 8.46 1244 -49.198469340581 -40.540892781214 -59047.159296401 2817634.3714157
+157	10679173 42861 51821 446235 1.002 8.46 1244 -25.017685717051 -16.71128692447 -29053.707732659 692292.68620125
+158	10722034 43110 51822 446236 1.002 8.46 1244 -38.787760649625 -30.461672693785 -46178.77834713 1728018.3866541
+159	10765144 43110 51823 446237 1.002 8.46 1244 -34.427231968777 -27.315704788587 -41056.70630129 1365098.9138231
+160	10808254 43110 51824 446238 1.002 8.46 1244 -19.545639661694 -13.889842813981 -22906.482324067 428160.87525176
+161	10851364 42612 51825 446239 1.002 8.46 1244 -27.160625230314 -19.9523556797 -31992.958668407 833137.09288217
+162	10893976 43110 51826 446240 1.002 8.46 1244 -27.612885589924 -22.088965307859 -32974.973523631 880151.76805381
+163	10937086 42115 51827 446241 1.002 8.46 1244 -34.43855188198 -23.721696829996 -40173.061633238 1320200.7926723
+164	10979201 73249 51862 446478 1.002 8.464 3685 0 1 31 31
+165	11052450 73854 51862 446478 1.002 8.464 3716 0 1 31 31
+166	11126304 73237 51862 446478 1.002 8.464 3685 1 2 3716 3778
+167	11199541 31337 51863 446442 1.002 8.463 1501 14 14 21014 294196
+168	11230878 50850 51863 446442 1.002 8.463 1501 118.89721995425 118.89721995425 178464.72715133 21218959.918186
+169	11281728 50850 51863 446442 1.002 8.463 1501 35.828632401904 41.114193349448 55418.331441349 2047917.707496
+170	11332578 32831 51864 446443 1.002 8.463 1501 54 705 774667 453420515
+171	11365409 41864 51959 446369 1.004 8.462 1244 18.066217485905 18.066217485905 22474.374552466 406026.93852453
+172	11407273 41864 51959 446369 1.004 8.462 1244 29.879875992373 29.879875992373 37170.565734513 1110651.8947136
+173	11449137 41864 51961 446371 1.004 8.462 1244 33.474486038508 33.474486038508 41642.260631905 1393953.2721346
+174	11491001 40620 51961 446371 1.004 8.462 1244 40.74418900621 40.74418900621 50685.771123726 2065150.6385906
+175	11531621 41864 51963 446373 1.004 8.462 1244 18.507499745382 18.507499745382 23023.329683255 426104.26825072
+176	11573485 41864 51963 446373 1.004 8.462 1244 22.339134711543 22.339134711543 27789.883581159 620801.95293759
+177	11615349 41864 51965 446375 1.004 8.462 1244 25.331657170428 25.331657170428 31512.581520012 798265.91162008
+178	11657213 41864 51965 446375 1.004 8.462 1244 4.3789332785454 4.3789332785454 5447.3929985105 23853.770482493
+179	11699077 41864 51967 446377 1.004 8.462 1244 34.559171962188 34.559171962188 42991.609920962 1485754.4401899
+180	11740941 40620 51967 446377 1.004 8.462 1244 34.69206993114 34.69206993114 43156.934994338 1497203.4068372
+181	11781561 31171 51971 446479 1.004 8.464 1493 15 15 22395 335925
+182	11812732 50580 51971 446479 1.004 8.464 1493 410.12627604111 410.12627604111 612318.53012938 251127918.51293
+183	11863312 50580 51971 446479 1.004 8.464 1493 27.266159880585 35.032200313283 48423.224638281 1580523.8485425
+184	11913892 32664 51972 446480 1.004 8.464 1493 167 870 774472 586209494
+185	11946556 29797 52017 446045 1.005 8.456 1499 1 1 1499 1499
+186	11976353 32788 52017 446045 1.005 8.456 1499 52 703 770632 449724742
+187	12009141 32788 52020 446048 1.005 8.456 1499 52 703 770632 449724742
+188	12041929 29797 52020 446048 1.005 8.456 1499 0 0 0 0
+189	12071726 35793 52020 446048 1.005 8.456 1499 0.004 0.004 5.9959999999998 0.023984
+190	12107519 29797 52020 446048 1.005 8.456 1499 0 0 0 0
+191	12137316 25106 52059 446048 1.006 8.456 746 116342.14055794 16807000 158496739.30286 3.8983840098044e+14
+192	12162422 14829 52059 446048 1.006 8.456 746 0 0 0 0
+193	12177251 14829 52059 446048 1.006 8.456 746 0 0 0 0
+194	12192080 24527 52059 446048 1.006 8.456 746 0.005070190714 0.007070190714 3.796362272644 0.019347263411736
+195	12216607 17067 52059 446048 1.006 8.456 746 1029 1029 767634 789895386
+196	12233674 17067 52060 446049 1.006 8.456 746 1029 1029 767634 789895386
+197	12250741 17067 52060 446049 1.006 8.456 746 1028 1028 766888 788360864
+198	12267808 17067 52063 446052 1.006 8.456 746 1008 1008 751968 757983744
+199	12284875 17067 52064 446053 1.006 8.456 746 1000 1000 746000 746000000
+200	12301942 24527 52064 446053 1.006 8.456 746 0.005073760314 0.007073760314 3.799025194244 0.019374375906838
+201	12326469 16318 52064 446053 1.006 8.456 746 97 842 350247 199037649
+202	12342787 29797 52069 446096 1.006 8.457 1499 0 0 0 0
+203	12372584 29797 52069 446096 1.006 8.457 1499 0 0 0 0
+204	12402381 29797 52069 446096 1.006 8.457 1499 1 1 1499 1499
+205	12432178 31150 52070 446097 1.006 8.457 1492 15 15 22380 335700
+206	12463328 50546 52070 446097 1.006 8.457 1492 224.50620747166 224.50620747166 334963.26154771 75201331.492415
+207	12513874 49807 52070 446097 1.006 8.457 1492 35.861508267989 44.005809257345 57242.310408536 2205315.6211144
+208	12563681 32642 52071 446098 1.006 8.457 1492 167 870 773602 583775814
+209	12596323 29646 52080 446137 1.007 8.458 1492 1 1 1492 1492
+210	12625969 32630 52080 446137 1.007 8.458 1492 165 868 770618 582364154
+211	12658599 32630 52083 446140 1.007 8.458 1492 165 868 770618 582364154
+212	12691229 29646 52083 446140 1.007 8.458 1492 0 0 0 0
+213	12720875 35614 52083 446140 1.007 8.458 1492 0.004 0.004 5.9679999999998 0.023872
+214	12756489 29646 52083 446140 1.007 8.458 1492 0 0 0 0
+215	12786135 24994 52156 446140 1.008 8.458 746 116172.9686243 12476625 151794620.60392 2.4853146339501e+14
+216	12811129 14817 52156 446140 1.008 8.458 746 0 0 0 0
+217	12825946 14817 52156 446140 1.008 8.458 746 0 0 0 0
+218	12840763 23769 52156 446140 1.008 8.458 746 0.00553569143 0.00753569143 4.15662580678 0.023206261524919
+219	12864532 17055 52156 446140 1.008 8.458 746 1029 1029 767634 789895386
+220	12881587 17055 52157 446141 1.008 8.458 746 1029 1029 767634 789895386
+221	12898642 17055 52157 446141 1.008 8.458 746 1028 1028 766888 788360864
+222	12915697 17055 52160 446144 1.008 8.458 746 1008 1008 751968 757983744
+223	12932752 17055 52161 446145 1.008 8.458 746 1000 1000 746000 746000000
+224	12949807 23769 52161 446145 1.008 8.458 746 0.00553926103 0.00753926103 4.15928872838 0.023235946013444
+225	12973576 16305 52161 446145 1.008 8.458 746 96 841 349501 198337901
+226	12989881 16245 52270 446264 1.01 8.46 746 1000 1000 746000 746000000
+227	13006126 24642 52277 446428 1.01 8.463 745 115681.49537719 9775500 146030616.26415 1.7591067508486e+14
+228	13030768 14602 52277 446428 1.01 8.463 745 0 0 0 0
+229	13045370 14602 52277 446428 1.01 8.463 745 0 0 0 0
+230	13059972 24287 52277 446428 1.01 8.463 745 0.019642830779 0.043642830779 22.296908930355 0.70171442127321
+231	13084259 16837 52277 446428 1.01 8.463 745 1029 1029 766605 788836545
+232	13101096 16837 52278 446429 1.01 8.463 745 1029 1029 766605 788836545
+233	13117933 16837 52278 446429 1.01 8.463 745 1028 1028 765860 787304080
+234	13134770 16837 52281 446432 1.01 8.463 745 1008 1008 750960 756967680
+235	13151607 16837 52282 446433 1.01 8.463 745 1000 1000 745000 745000000
+236	13168444 24287 52282 446433 1.01 8.463 745 0.019646400379 0.043646400379 22.299568282355 0.70187361285828
+237	13192731 16086 52282 446433 1.01 8.463 745 94 838 347170 196238960
+238	13208817 2409 62268 443037 1.1990433593 8.3990433593 73 -93444.38719273 4112000 295888315.61281 1.2167543215111e+15
+239	13211226 2409 62268 443037 1.1990433593 8.3990433593 73 -93444.38719273 4112000 295888315.61281 1.2167543215111e+15
+240	13213635 2410 62272 443041 1.1990442373 8.3990442373 73 -93444.396514919 4112000 295888315.60349 1.2167543215128e+15
+241	13216045 2410 62272 443041 1.1990442373 8.3990442373 73 -93444.396514919 4112000 295888315.60349 1.2167543215128e+15
+242	13218455 2410 62279 443048 1.1990451153 8.3990451153 73 -96716.778025958 4256000 306250163.22197 1.3034666501096e+15
+243	13220865 2410 62279 443048 1.1990451153 8.3990451153 73 -96716.778025958 4256000 306250163.22197 1.3034666501096e+15
+244	13223275 2410 62283 443052 1.1990460221 8.3990460221 73 -96716.787991102 4256000 306250163.21201 1.3034666501115e+15
+245	13225685 2410 62283 443052 1.1990460221 8.3990460221 73 -96716.787991102 4256000 306250163.21201 1.3034666501115e+15
+246	13228095 605 64858 440452 1.248 8.35 31 0 0 0 0
+vector 247 SingleCell_Standalone.server.app[0] cbrGeneratedThroughtput:vector ETV
+attr recordingmode vector
+attr source cbrGeneratedThroughtputSignal
+attr title "Throughput generated by the application"
+attr unit Bps
+vector 248 SingleCell_Standalone.server.app[1] cbrGeneratedThroughtput:vector ETV
+attr recordingmode vector
+attr source cbrGeneratedThroughtputSignal
+attr title "Throughput generated by the application"
+attr unit Bps
+vector 249 SingleCell_Standalone.server.app[2] cbrGeneratedThroughtput:vector ETV
+attr recordingmode vector
+attr source cbrGeneratedThroughtputSignal
+attr title "Throughput generated by the application"
+attr unit Bps
+vector 250 SingleCell_Standalone.server.app[3] cbrGeneratedThroughtput:vector ETV
+attr recordingmode vector
+attr source cbrGeneratedThroughtputSignal
+attr title "Throughput generated by the application"
+attr unit Bps
+vector 251 SingleCell_Standalone.server.app[4] cbrGeneratedThroughtput:vector ETV
+attr recordingmode vector
+attr source cbrGeneratedThroughtputSignal
+attr title "Throughput generated by the application"
+attr unit Bps
+0	13229810 20248 446632 527680 8.467353599621 9.9990433593 767 0 0 0 0
+1	13250058 20248 446632 527680 8.467353599621 9.9990433593 767 0 0 0 0
+7	13270306 20248 446636 527684 8.467354477621 9.9990442373 767 0 0 0 0
+8	13290554 20248 446636 527684 8.467354477621 9.9990442373 767 0 0 0 0
+9	13310802 20275 446495 527691 8.464277912826 9.9990451153 768 0 0 0 0
+10	13331077 21043 446495 527691 8.464277912826 9.9990451153 768 0 0 0 0
+18	13352120 21043 446499 527695 8.464278819626 9.9990460221 768 0 0 0 0
+19	13373163 21043 446499 527695 8.464278819626 9.9990460221 768 0 0 0 0
+29	13394206 23347 446503 527699 8.464279726426 9.9990469289 768 3733 4500 3161472 13051948160
+32	13417553 3234 446672 527608 8.468 9.998 154 747 900 126819 104739789
+35	13420787 3062 446787 527722 8.47 10 154 748 901 126973 104993581
+38	13423849 3231 446684 527620 8.468 9.998 154 748 901 126973 104993581
+41	13427080 3213 446961 527301 8.473 9.992 153 746 898 125766 103678104
+44	13430293 3234 446585 527520 8.466 9.996 154 747 900 126819 104739789
+47	13433527 29011 446510 527706 8.465 10 1536 0 0 0 0
+48	13462538 29011 446510 527706 8.465 10 1536 3 3 4608 13824
+49	13491549 29011 446510 527706 8.465 10 1536 0 1 151 151
+50	13520560 29011 446510 527706 8.465 10 1536 6 6 9216 55296
+51	13549571 29011 446511 527707 8.465 10 1536 0 0 0 0
+52	13578582 29011 446511 527707 8.465 10 1536 4 6 8601 48839
+53	13607593 40620 446511 527707 8.465 10 2147 1 1 2147 2147
+54	13648213 40620 446513 527709 8.465 10 2147 0 0 0 0
+55	13688833 44760 446513 527709 8.465 10 2147 44 868 794423 431407393
+56	13733593 68107 446509 527711 8.464279726426 10 2915 44 1031 1586231 1247761441
+57	13801700 5679 446721 527715 8.469 10 308 1 1 308 308
+58	13807379 49100 446525 527727 8.465 10 2150 0.004 0.01 8.6239999999995 0.034735999999999
+59	13856479 6295 446721 527715 8.469 10 308 165 868 159082 119980406
+60	13862774 6295 446724 527718 8.469 10 308 165 868 159082 119980406
+61	13869069 5679 446724 527718 8.469 10 308 0 0 0 0
+62	13874748 6911 446724 527718 8.469 10 308 0.004 0.004 1.232 0.004928
+63	13881659 4857 446783 527718 8.47 10 154 114104.66666667 116399.59839357 17737923.455222 2043145629427.6
+64	13886516 2754 446783 527718 8.47 10 154 0 0 0 0
+65	13889270 2754 446783 527718 8.47 10 154 0 0 0 0
+66	13892024 4756 446783 527718 8.47 10 154 0.005720273574 0.006720273574 0.881922130396 0.005051556130404
+67	13896780 3216 446783 527718 8.47 10 154 1029 1029 158466 163061514
+68	13899996 5679 446724 527718 8.469 10 308 0 0 0 0
+69	13905675 3216 446784 527719 8.47 10 154 1029 1029 158466 163061514
+70	13908891 3216 446784 527719 8.47 10 154 1028 1028 158312 162744736
+71	13912107 3216 446787 527722 8.47 10 154 1008 1008 155232 156473856
+72	13915323 4756 446788 527723 8.47 10 154 0.005723843174 0.006723843174 0.882471848796 0.0050578543111522
+73	13920079 3062 446788 527723 8.47 10 154 844 997 141757 130791661
+74	13923141 8774 446571 527613 8.466 9.998 462 1 1 462 462
+75	13931915 9698 446571 527613 8.466 9.998 462 121 490 158902 59813562
+76	13941613 9698 446574 527616 8.466 9.998 462 121 490 158902 59813562
+77	13951311 8774 446574 527616 8.466 9.998 462 0 0 0 0
+78	13960085 10622 446574 527616 8.466 9.998 462 0.004 0.004 1.848 0.0073920000000001
+79	13970707 8774 446574 527616 8.466 9.998 462 0 0 0 0
+80	13979481 44844 446529 527733 8.465 10 2151 46 870 799637 434813737
+81	14024325 64773 446532 527736 8.465 10 3433 1 1 3433 3433
+82	14089098 5851 446706 527669 8.468 9.999 308 0 0 0 0
+83	14094949 5851 446706 527669 8.468 9.999 308 0 0 0 0
+84	14100800 5851 446706 527669 8.468 9.999 308 1 1 308 308
+85	14106651 5661 446801 527736 8.47 10 307 0 0 0 0
+86	14112312 5661 446801 527736 8.47 10 307 0 0 0 0
+87	14117973 5661 446801 527736 8.47 10 307 1 1 307 307
+88	14123634 14438 446537 527737 8.465 10 769 6 6 4614 27684
+89	14138072 25204 446537 527737 8.465 10 769 423.00940623693 423.00940623693 325294.2333962 137602520.52122
+90	14163276 25204 446537 527737 8.465 10 769 3.7549390042967 5.0412478490001 3207.3803905582 13432.606405283
+91	14188480 15823 446538 527738 8.465 10 769 46 276 162886 40730884
+92	14204303 23316 446630 527678 8.467353599621 9.9990433593 767 1008 1008 773136 779321088
+93	14227619 23316 446632 527680 8.467353599621 9.9990433593 767 8224 8224 6307808 51875412992
+94	14250935 21015 446632 527680 8.467353599621 9.9990433593 767 0 0 0 0
+95	14271950 23316 446632 527680 8.467353599621 9.9990433593 767 8224 8224 6307808 51875412992
+96	14295266 23316 446632 527680 8.467353599621 9.9990433593 767 1028 1028 788476 810553328
+97	14318582 42030 446632 527681 8.467353599621 9.9990441873 1534 0 1 767 767
+98	14360612 23316 446632 527680 8.467353599621 9.9990433593 767 1035 1035 793845 821629575
+99	14383928 23316 446634 527682 8.467354477621 9.9990442373 767 1035 1035 793845 821629575
+100	14407244 24083 446634 527682 8.467354477621 9.9990442373 767 1028 1028 788476 810553328
+101	14431327 24083 446636 527684 8.467354477621 9.9990442373 767 8224 8224 6307808 51875412992
+102	14455410 21782 446636 527684 8.467354477621 9.9990442373 767 0 0 0 0
+103	14477192 24083 446636 527684 8.467354477621 9.9990442373 767 8224 8224 6307808 51875412992
+104	14501275 24083 446636 527684 8.467354477621 9.9990442373 767 1028 1028 788476 810553328
+105	14525358 43564 446636 527685 8.467354477621 9.9990450653 1534 0 1 767 767
+106	14568922 24083 446636 527684 8.467354477621 9.9990442373 767 1035 1035 793845 821629575
+107	14593005 24083 446638 527686 8.467355355621 9.9990451153 767 1035 1035 793845 821629575
+108	14617088 24083 446638 527686 8.467355355621 9.9990451153 767 1028 1028 788476 810553328
+109	14641171 24083 446641 527689 8.467355355621 9.9990451153 767 1044 1044 800748 835980912
+110	14665254 24083 446643 527691 8.467355355621 9.9990451153 767 8512 8512 6528704 55572328448
+111	14689337 21782 446643 527691 8.467355355621 9.9990451153 767 0 0 0 0
+112	14711119 24083 446643 527691 8.467355355621 9.9990451153 767 8512 8512 6528704 55572328448
+113	14735202 24083 446643 527691 8.467355355621 9.9990451153 767 1064 1064 816088 868317632
+114	14759285 43622 446495 527692 8.464277912826 9.9990459721 1536 0 1 768 768
+115	14802907 24115 446495 527691 8.464277912826 9.9990451153 768 1071 1071 822528 880927488
+116	14827022 24115 446497 527693 8.464278819626 9.9990460221 768 1071 1071 822528 880927488
+117	14851137 24115 446497 527693 8.464278819626 9.9990460221 768 1064 1064 817152 869449728
+118	14875252 24115 446499 527695 8.464278819626 9.9990460221 768 8512 8512 6537216 55644782592
+119	14899367 21811 446499 527695 8.464278819626 9.9990460221 768 0 0 0 0
+120	14921178 24115 446499 527695 8.464278819626 9.9990460221 768 8512 8512 6537216 55644782592
+121	14945293 24115 446499 527695 8.464278819626 9.9990460221 768 1064 1064 817152 869449728
+122	14969408 43622 446499 527696 8.464278819626 9.9990468789 1536 0 1 768 768
+123	15013030 24115 446499 527695 8.464278819626 9.9990460221 768 1071 1071 822528 880927488
+124	15037145 24115 446501 527697 8.464279726426 9.9990469289 768 1071 1071 822528 880927488
+125	15061260 24115 446501 527697 8.464279726426 9.9990469289 768 1064 1064 817152 869449728
+126	15085375 24115 446503 527699 8.464279726426 9.9990469289 768 1044 1044 801792 837070848
+127	15109490 24115 446506 527702 8.464279726426 9.9990469289 768 1028 1028 789504 811610112
+128	15133605 24115 446506 527702 8.464279726426 9.9990469289 768 1029 1029 790272 813189888
+129	15157720 24115 446507 527703 8.464279726426 9.9990469289 768 1029 1029 790272 813189888
+130	15181835 5215 446680 527616 8.468 9.998 154 114015.67014892 116292.98339582 17722860.104469 2039676063657.7
+131	15187050 3077 446680 527616 8.468 9.998 154 0 0 0 0
+132	15190127 3077 446680 527616 8.468 9.998 154 0 0 0 0
+133	15193204 4771 446680 527616 8.468 9.998 154 0.0089530711 0.0119530711 1.3857729494 0.012486595242135
+134	15197975 3539 446680 527616 8.468 9.998 154 1029 1029 158466 163061514
+135	15201514 3539 446681 527617 8.468 9.998 154 1029 1029 158466 163061514
+136	15205053 3539 446681 527617 8.468 9.998 154 1028 1028 158312 162744736
+137	15208592 3539 446684 527620 8.468 9.998 154 1008 1008 155232 156473856
+138	15212131 3539 446685 527621 8.468 9.998 154 1000 1000 154000 154000000
+139	15215670 4771 446685 527621 8.468 9.998 154 0.0089566407 0.0119566407 1.3863226678 0.01249649051465
+140	15220441 3385 446685 527621 8.468 9.998 154 843 996 141603 130508301
+141	15223826 15149 446687 527727 8.468 10 766 1 1 766 766
+142	15238975 16442 446687 527727 8.468 10 762 44 274 159614 39640788
+143	15255417 16442 446690 527730 8.468 10 762 44 274 159614 39640788
+144	15271859 15071 446690 527730 8.468 10 762 0 0 0 0
+145	15286930 18115 446690 527730 8.468 10 762 0.004 0.01 3.072 0.012528
+146	15305045 15071 446690 527730 8.468 10 762 0 0 0 0
+147	15320116 9260 446532 527671 8.465 9.999 463 0 0 0 0
+148	15329376 9260 446532 527671 8.465 9.999 463 0 0 0 0
+149	15338636 9260 446532 527671 8.465 9.999 463 1 1 463 463
+150	15347896 9681 446535 527469 8.465 9.995 461 13 13 5993 77909
+151	15357577 15674 446535 527469 8.465 9.995 461 596.31907950106 596.31907950106 274903.09564999 163929960.94999
+152	15373251 15521 446535 527469 8.465 9.995 461 24.594292296859 26.816949035369 11573.875421334 290708.71448054
+153	15388772 10142 446536 527470 8.465 9.995 461 123 492 159580 60390502
+154	15398914 8902 446541 527475 8.466 9.996 256 -15.332708316919 -11.500005362153 -3729.7054784382 54938.604877809
+155	15407816 8902 446542 527476 8.466 9.996 256 -18.797289170637 -11.824060446537 -4456.4713627541 79564.535111348
+156	15416718 8902 446543 527477 8.466 9.996 256 -49.198469340581 -40.540892781214 -12153.271746661 580022.08738089
+157	15425620 8851 446544 527478 8.466 9.996 256 -25.017685717051 -16.71128692447 -5980.9012051434 142548.96536488
+158	15434471 8902 446545 527479 8.466 9.996 256 -38.787760649625 -30.461672693785 -9505.0362405561 355744.11579204
+159	15443373 8902 446546 527480 8.466 9.996 256 -34.427231968777 -27.315704788587 -8450.6834978172 281026.56584451
+160	15452275 8902 446547 527481 8.466 9.996 256 -19.545639661694 -13.889842813981 -4715.2381141603 88155.880509135
+161	15461177 8800 446548 527482 8.466 9.996 256 -27.160625230314 -19.9523556797 -6585.498311879 171531.33175045
+162	15469977 8902 446549 527483 8.466 9.996 256 -27.612885589924 -22.088965307859 -6787.1787766352 181190.68918042
+163	15478879 8697 446550 527484 8.466 9.996 256 -34.43855188198 -23.721696829996 -8269.7096741357 271831.50434941
+164	15487576 15220 446738 527673 8.469 9.999 761 0 1 4 4
+165	15502796 15299 446738 527673 8.469 9.999 765 0 1 4 4
+166	15518095 15219 446738 527673 8.469 9.999 761 1 2 765 773
+167	15533314 6468 446905 527376 8.472 9.993 308 14 14 4312 60368
+168	15539782 10472 446905 527376 8.472 9.993 308 118.89721995425 118.89721995425 36620.343745908 4354057.0651574
+169	15550254 10472 446905 527376 8.472 9.993 308 35.828632401904 41.114193349448 11375.903279766 420551.11762079
+170	15560726 6774 446906 527377 8.472 9.993 308 54 705 158669 92853529
+171	15567500 8648 446695 527631 8.468 9.998 256 18.066217485905 18.066217485905 4624.9516763917 83555.382847493
+172	15576148 8648 446695 527631 8.468 9.998 256 29.879875992373 29.879875992373 7649.2482540476 228558.58926582
+173	15584796 8648 446697 527633 8.468 9.998 256 33.474486038508 33.474486038508 8569.4684258581 286858.55117883
+174	15593444 8392 446697 527633 8.468 9.998 256 40.74418900621 40.74418900621 10430.51238559 424982.76807009
+175	15601836 8648 446699 527635 8.468 9.998 256 18.507499745382 18.507499745382 4737.9199348178 87687.051987283
+176	15610484 8648 446699 527635 8.468 9.998 256 22.339134711543 22.339134711543 5718.8184861549 127753.45655308
+177	15619132 8648 446701 527637 8.468 9.998 256 25.331657170428 25.331657170428 6484.9042356294 164273.37088002
+178	15627780 8648 446701 527637 8.468 9.998 256 4.3789332785454 4.3789332785454 1121.0069193076 4908.8145044358
+179	15636428 8648 446703 527639 8.468 9.998 256 34.559171962188 34.559171962188 8847.1480223202 305750.1098783
+180	15645076 8392 446703 527639 8.468 9.998 256 34.69206993114 34.69206993114 8881.1699023718 308106.16732342
+181	15653468 6447 446533 527467 8.465 9.995 307 15 15 4605 69075
+182	15659915 10438 446533 527467 8.465 9.995 307 410.12627604111 410.12627604111 125908.76674462 51638493.6259
+183	15670353 10438 446533 527467 8.465 9.995 307 29.879875992373 35.032200313283 9966.5798750787 325596.74841956
+184	15680791 6754 446534 527468 8.465 9.995 307 167 870 158828 120100606
+185	15687545 6200 446525 527513 8.465 9.996 310 1 1 310 310
+186	15693745 6818 446525 527513 8.465 9.996 310 52 703 159086 92823194
+187	15700563 6818 446528 527516 8.465 9.996 310 52 703 159086 92823194
+188	15707381 6200 446528 527516 8.465 9.996 310 0 0 0 0
+189	15713581 7440 446528 527516 8.465 9.996 310 0.004 0.004 1.24 0.00496
+190	15721021 6200 446528 527516 8.465 9.996 310 0 0 0 0
+191	15727221 5221 446581 527516 8.466 9.996 154 114041.01823032 116324.13608358 17727224.261452 2040681053784.3
+192	15732442 3080 446581 527516 8.466 9.996 154 0 0 0 0
+193	15735522 3080 446581 527516 8.466 9.996 154 0 0 0 0
+194	15738602 5082 446581 527516 8.466 9.996 154 0.005070190714 0.007070190714 0.784809369956 0.0040074139426671
+195	15743684 3542 446581 527516 8.466 9.996 154 1029 1029 158466 163061514
+196	15747226 3542 446582 527517 8.466 9.996 154 1029 1029 158466 163061514
+197	15750768 3542 446582 527517 8.466 9.996 154 1028 1028 158312 162744736
+198	15754310 3542 446585 527520 8.466 9.996 154 1008 1008 155232 156473856
+199	15757852 3542 446586 527521 8.466 9.996 154 1000 1000 154000 154000000
+200	15761394 5082 446586 527521 8.466 9.996 154 0.005073760314 0.007073760314 0.785359088356 0.0040130188159959
+201	15766476 3388 446586 527521 8.466 9.996 154 843 996 141603 130508301
+202	15769864 6200 446591 527559 8.466 9.997 310 0 0 0 0
+203	15776064 6200 446591 527559 8.466 9.997 310 0 0 0 0
+204	15782264 6200 446591 527559 8.466 9.997 310 1 1 310 310
+205	15788464 6468 446592 527560 8.466 9.997 308 15 15 4620 69300
+206	15794932 10472 446592 527560 8.466 9.997 308 224.50620747166 224.50620747166 69147.911901272 15524135.455539
+207	15805404 10319 446592 527560 8.466 9.997 308 35.861508267989 43.185529375321 11803.79087109 454218.60414301
+208	15815723 6776 446593 527561 8.466 9.997 308 167 870 159698 120617966
+209	15822499 6160 446607 527601 8.467 9.998 308 1 1 308 308
+210	15828659 6776 446607 527601 8.467 9.998 308 165 868 159082 120219946
+211	15835435 6776 446610 527604 8.467 9.998 308 165 868 159082 120219946
+212	15842211 6160 446610 527604 8.467 9.998 308 0 0 0 0
+213	15848371 7392 446610 527604 8.467 9.998 308 0.004 0.004 1.232 0.004928
+214	15855763 6160 446610 527604 8.467 9.998 308 0 0 0 0
+215	15861923 5205 446668 527604 8.468 9.998 154 113901.31140253 116155.1955008 17703637.554802 2035252638580.4
+216	15867128 3080 446668 527604 8.468 9.998 154 0 0 0 0
+217	15870208 3080 446668 527604 8.468 9.998 154 0 0 0 0
+218	15873288 4928 446668 527604 8.468 9.998 154 0.00553569143 0.00653569143 0.85349648022 0.004731228842519
+219	15878216 3542 446668 527604 8.468 9.998 154 1029 1029 158466 163061514
+220	15881758 3542 446669 527605 8.468 9.998 154 1029 1029 158466 163061514
+221	15885300 3542 446669 527605 8.468 9.998 154 1028 1028 158312 162744736
+222	15888842 3542 446672 527608 8.468 9.998 154 1008 1008 155232 156473856
+223	15892384 3542 446673 527609 8.468 9.998 154 1000 1000 154000 154000000
+224	15895926 4928 446673 527609 8.468 9.998 154 0.00553926103 0.00653926103 0.85404619862 0.0047373240868654
+225	15900854 3388 446673 527609 8.468 9.998 154 842 995 141449 130225249
+226	15904242 3370 446788 527723 8.47 10 154 1000 1000 154000 154000000
+227	15907612 5177 446957 527297 8.473 9.992 153 113519.57295374 115664.39181052 17522822.21361 2006917453527.9
+228	15912789 3060 446957 527297 8.473 9.992 153 0 0 0 0
+229	15915849 3060 446957 527297 8.473 9.992 153 0 0 0 0
+230	15918909 5049 446957 527297 8.473 9.992 153 0.033642830779 0.040642830779 5.356353109187 0.18761323287776
+231	15923958 3519 446957 527297 8.473 9.992 153 1029 1029 157437 162002673
+232	15927477 3519 446958 527298 8.473 9.992 153 1029 1029 157437 162002673
+233	15930996 3519 446958 527298 8.473 9.992 153 1028 1028 157284 161687952
+234	15934515 3519 446961 527301 8.473 9.992 153 1008 1008 154224 155457792
+235	15938034 3519 446962 527302 8.473 9.992 153 1000 1000 153000 153000000
+236	15941553 5049 446962 527302 8.473 9.992 153 0.033646400379 0.040646400379 5.356899257987 0.18765147490341
+237	15946602 3366 446962 527302 8.473 9.992 153 839 991 139995 128393877
+238	15949968 528 448331 527680 8.4990433593 9.9990433593 16 4112000 4112000 65792000 2.70536704e+14
+239	15950496 528 448331 527680 8.4990433593 9.9990433593 16 4112000 4112000 65792000 2.70536704e+14
+240	15951024 528 448335 527684 8.4990442373 9.9990442373 16 4112000 4112000 65792000 2.70536704e+14
+241	15951552 528 448335 527684 8.4990442373 9.9990442373 16 4112000 4112000 65792000 2.70536704e+14
+242	15952080 528 448342 527691 8.4990451153 9.9990451153 16 4256000 4256000 68096000 2.89816576e+14
+243	15952608 528 448342 527691 8.4990451153 9.9990451153 16 4256000 4256000 68096000 2.89816576e+14
+244	15953136 528 448346 527695 8.4990460221 9.9990460221 16 4256000 4256000 68096000 2.89816576e+14
+245	15953664 528 448346 527695 8.4990460221 9.9990460221 16 4256000 4256000 68096000 2.89816576e+14
+246	15954192 79 469984 516947 8.909 9.797 4 0 0 0 0
+247	15954271 22 527739 527739 10 10 1 100000 100000 100000 10000000000
+248	15954293 22 527739 527739 10 10 1 100000 100000 100000 10000000000
+249	15954315 22 527739 527739 10 10 1 100000 100000 100000 10000000000
+250	15954337 22 527739 527739 10 10 1 100000 100000 100000 10000000000
+251	15954359 22 527739 527739 10 10 1 100000 100000 100000 10000000000
+
